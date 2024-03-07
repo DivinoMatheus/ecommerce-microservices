@@ -11,7 +11,6 @@ async function bootstrap() {
     .setTitle('Orders Service')
     .setDescription('Microservice to manage orders')
     .setVersion('1.0')
-    .addTag('orders')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -11,7 +11,6 @@ async function bootstrap() {
     .setTitle('Accounts Service')
     .setDescription('Microservice to manage accounts')
     .setVersion('1.0')
-    .addTag('accounts')
     .addBearerAuth({ in: 'header', type: 'http' }).build();
 
   const document = SwaggerModule.createDocument(app, config);

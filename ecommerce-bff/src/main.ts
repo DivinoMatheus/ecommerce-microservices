@@ -11,7 +11,6 @@ async function bootstrap() {
     .setTitle('E-Commerce BFF')
     .setDescription('BFF microservice for e-commerce')
     .setVersion('1.0')
-    .addTag('ecommerce-bff')
     .addBearerAuth({ in: 'header', type: 'http' }).build();
 
   const document = SwaggerModule.createDocument(app, config);

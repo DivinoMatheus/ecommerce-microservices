@@ -12,7 +12,6 @@ async function bootstrap() {
     .setTitle('Notifications Service')
     .setDescription('Microservice to manage notifications')
     .setVersion('1.0')
-    .addTag('notifications')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

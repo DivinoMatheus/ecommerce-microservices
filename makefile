@@ -53,3 +53,5 @@ run-all: run-products run-accounts run-carts run-orders run-payments run-notific
 
 stop-all:
 	pm2 delete all
+
+restart-all: stop-all run-all
