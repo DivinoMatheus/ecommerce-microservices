@@ -8,7 +8,7 @@
 __Instrução antecipada:__ Para receber e-mails ao finalizar uma compra é preciso preencher as variáveis ambiente do arquivo `/notifications-service/envs/.env.development` referente ao SMTP
 
 1. Execute o comando `docker-compose up -d` (Aguarde os containers iniciarem)
-2. Execute o comando `make build-all` para instalar as dependências e compilar os microsserviços
+2. Execute o comando `make build-all` para instalar as dependências e compilar os microsserviços. _(Este procedimento pode demorar um pouco, se estiver em um computador mais performático execute o comando com a flag `-j7`, ou seja: `make build-all -j7` para instalar as dependências simultaneamente para todos os microsserviços)_
 3. Por fim, é só executar com o comando `make run-all`
 
 Os serviços deverão rodar nos seguintes hosts:

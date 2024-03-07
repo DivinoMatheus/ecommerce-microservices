@@ -3,7 +3,7 @@ version: "3.0"
 services:
   postgres:
     container_name: postgres
-    image: postgres
+    image: postgres:16.2
     volumes:
       - ./docker-postgres-init.sql:/docker-entrypoint-initdb.d/docker-postgres-init.sql
     ports:
