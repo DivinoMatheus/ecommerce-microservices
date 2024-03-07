@@ -33,8 +33,8 @@ export class NotificationsController {
       const channel = context.getChannelRef();
       const originalMsg = context.getMessage();
 
-      channel.ack(originalMsg);
-      return this.sendOrderPaymentNotificationUseCase.send({ ...data, status: "FAIL" } as OrderPaymentNotification);
+      
+      await this.sendOrderPaymentNotificationUseCase.send({ ...data, status: "FAIL" }).then(() => channel.ack(originalMsg));
     } catch (error) {
       // this.logger.error(`Something wrong happened: ${error.message}`, error);
     }

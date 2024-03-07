@@ -7,6 +7,8 @@ import { RemoveProductsFromCartUseCase } from 'src/domain/usecases/remove-produc
 import { AddProductToCartUseCase } from 'src/domain/usecases/add-product-to-card/add-product-to-cart.usecase';
 import { RemoveProductsFromCartRequest } from './dto/requests/remove-products-from-cart.request';
 import { Cart } from 'src/domain/entities/cart';
+import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
+import { DeleteCartByOwnerUseCase } from 'src/domain/usecases/delete-cart-by-owner/delete-cart-by-owner.usecase';
 
 @ApiTags('carts')
 @Controller('carts')
@@ -15,6 +17,7 @@ export class CartsController {
     private readonly findCartByIdUseCase: FindCartByOwnerUseCase,
     private readonly addProductToCartUseCase: AddProductToCartUseCase,
     private readonly removeProductsFromCartUseCase: RemoveProductsFromCartUseCase,
+    private readonly deleteCartByOwnerUseCase: DeleteCartByOwnerUseCase
   ) {}
 
   @Get()
@@ -48,5 +51,18 @@ export class CartsController {
     if (!accountId) throw new HttpException("x-account-id header cannot be empty", HttpStatus.BAD_REQUEST)
 
     return this.removeProductsFromCartUseCase.remove(accountId, body.products)
+  }
+
+  @MessagePattern('created')
+  async processOrderCreated(@Payload() data, @Ctx() context: RmqContext): Promise<void> {
+    console.log('message received', data)
+    try { 
+      const channel = context.getChannelRef();
+      const originalMsg = context.getMessage();
+
+      await this.deleteCartByOwnerUseCase.delete(data.owner).then(() => channel.ack(originalMsg));
+    } catch (error) {
+      // this.logger.error(`Something wrong happened: ${error.message}`, error);
+    }
   }
 }

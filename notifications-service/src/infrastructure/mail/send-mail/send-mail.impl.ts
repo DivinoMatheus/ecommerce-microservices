@@ -11,7 +11,7 @@ export class SendMailServiceImpl implements SendMailService {
             from: process.env.MAIL_SMTP_USER,
             to,
             subject,
-            text
+            html: text
         }
 
         await this.mailerService.sendMail(options)

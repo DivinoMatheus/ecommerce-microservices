@@ -22,9 +22,9 @@ Os serviços deverão rodar nos seguintes hosts:
 
 ## Roteiro de uso
 1. Primeiro, crie uma conta através do micro-serviço de [_accounts_](http://localhost:3001/swagger-ui) na rota `POST /accounts`
-2. Depois, faça login a partir da rota `POST /auth`
-3. Use o token obtido no login para adicionar ou remover produtos no carrinho e/ou finalizar uma compra a partir das rotas do micro-serviço [ecommerce-bff](http://localhost:3006/swagger-ui) (_Use os IDs da lista de produtos abaixo que já vem pre-cadastrados no banco_)
-4. Ao finalizar você deverá receber um e-mail informando o resultado do pagamento da compra. (_O resultado é uma de chance 50% de falhar / 50% de aprovar_)
+2. No mesmo micro-serviço, faça login a partir da rota `POST /auth`
+3. No micro-serviço [ecommerce-bff](http://localhost:3006/swagger-ui), use o token obtido no login para adicionar ou remover produtos do carrinho e finalizar uma compra a partir da rota `POST /orders` (_Use os IDs dos produtos abaixo que já vem pre-cadastrados no banco_)
+4. Ao finalizar uma compra você deverá receber um e-mail que informa o resultado do pagamento da compra. (_O resultado é uma de chance 50% de falhar / 50% de aprovar_)
 
 __Obs:__ Para receber o e-mail, é preciso seguir as instruções acima sobre preencher as variáveis ambiente referente ao SMTP. 
 ## Produtos já cadastrados na catalogo

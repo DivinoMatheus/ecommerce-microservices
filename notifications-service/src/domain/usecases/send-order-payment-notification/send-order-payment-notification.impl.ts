@@ -17,11 +17,14 @@ export class SendOrderPaymentNotificationUseCaseImpl implements SendOrderPayment
 
   private generateSuccessMail = (order: Order) => {
     return {
-      subject: "Pagamento confirmado",
+      subject: "Pagamento confirmado :)",
       text: `
-        Acabamos de confirmar o pagamento para o seu pedido ${order.id}
+      <div>
+      <h2>Pagamento confirmado :)</h2>
+        <p>Acabamos de confirmar o pagamento para o seu pedido <strong>${order.id}</strong></p>
         ${this.generateProductsList(order.products)} \n
-        Total: ${order.formattedTotalPrice}
+        <h3>Total: ${order.formattedTotalPrice}</h3>
+      </div>
         `
     }
   }
@@ -30,17 +33,25 @@ export class SendOrderPaymentNotificationUseCaseImpl implements SendOrderPayment
     return {
       subject: "O pagamento falhou :(",
       text: `
-        Infelizmente o pagamento para o pedido ${order.id} foi negado. 
+      <div>
+      <h2>O pagamento falhou :(</h2>
+        <p>Infelizmente o pagamento para o pedido <strong>${order.id}</strong> foi negado. </p> 
         ${this.generateProductsList(order.products)} \n
-        ${order.formattedTotalPrice}
+        <h3>Total: ${order.formattedTotalPrice}</h3>
+      </div>
         `
     }
   }
 
   private generateProductsList = (products: Array<Product>): string => { 
-    return products.reduce((previous: string, current: Product) => { 
-      return `${previous}\n - ${current.title}`
+    let list = '<ol>'
+    
+    list += products.reduce((previous: string, current: Product) => { 
+      return `<li>${previous}\n - ${current.title}</li>`
     }, '')
+
+    list += '</ol>'
+    return list
   }
 
   async send(notification: OrderPaymentNotification): Promise<void> {

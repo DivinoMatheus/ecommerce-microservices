@@ -6,6 +6,7 @@ import { Product } from 'src/domain/entities/product';
 import { OrderPaymentSuccessPublisher } from 'src/domain/publishers/order-payment-success.publisher';
 import { OrderPaymentFailPublisher } from 'src/domain/publishers/order-payment-fail.publisher';
 import { PaymentsPort } from 'src/domain/ports/payments.port';
+import { OrderCreatedPublisher } from 'src/domain/publishers/order-created-publisher';
 
 @Injectable()
 export class CreateOrderUseCaseImpl implements CreateOrderUseCase {
@@ -13,7 +14,8 @@ export class CreateOrderUseCaseImpl implements CreateOrderUseCase {
     private readonly createOrderRepository: CreateOrderRepository,
     private readonly paymentsPort: PaymentsPort,
     private readonly orderPaymentSuccessPublisher: OrderPaymentSuccessPublisher,
-    private readonly orderPaymentFailPublisher: OrderPaymentFailPublisher
+    private readonly orderPaymentFailPublisher: OrderPaymentFailPublisher,
+    private readonly orderCreatedPublisher: OrderCreatedPublisher
   ) {}
 
   async create(order: Order): Promise<Order> {
@@ -25,6 +27,8 @@ export class CreateOrderUseCaseImpl implements CreateOrderUseCase {
       formattedTotalPrice: this.formatPrice(totalPrice) 
     });
 
+    if (createdOrder) this.orderCreatedPublisher.publish({ orderId: createdOrder.id, owner: createdOrder.owner })
+    
     const paymentResult = await this.paymentsPort.pay()
     
     paymentResult ? 
