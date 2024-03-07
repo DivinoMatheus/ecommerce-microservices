@@ -1,0 +1,22 @@
+version: "3.0"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - ./docker-postgres-init.sql:/docker-entrypoint-initdb.d/docker-postgres-init.sql
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.13.0-management-alpine
+    ports: 
+      - 5672:5672
+      - 15672:15672
+
+    
