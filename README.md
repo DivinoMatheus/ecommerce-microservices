@@ -1,5 +1,5 @@
 ## Pre-requisitos para rodar a aplicação localmente
-- Docker
+- [Docker](https://www.docker.com/)
 - Node.js ([20.11.1](https://nodejs.org/dist/v20.11.1/)) - _Certifique-se de usar a versão especificada, o [nvm](https://github.com/coreybutler/nvm-windows) pode ser usado para isso_
 - PM2 (`npm install -g pm2@latest`)
 - Make - _Pode ser instalado com `brew install make` (MacOS), `choco install make` (Windows), `sudo apt-get install make` (Linux) ou fazendo o download pelo browser através do [site](https://ftp.gnu.org/gnu/make/)_
